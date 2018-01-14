@@ -2,5 +2,8 @@
   "name": "inbox",
   "version": "1.0.0",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "solc": "^0.4.19"
+  }
 }
