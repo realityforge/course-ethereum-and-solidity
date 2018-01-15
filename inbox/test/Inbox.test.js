@@ -11,7 +11,27 @@ const web3 = new Web3(ganache.provider());
 // Destructure the compiled output of the smart contract
 const { interface, bytecode } = require('../compile');
 
-beforeEach(() => {
+let accounts;
+let inbox;
+
+beforeEach(async() => {
+  // Get a list of all accounts
+  accounts = await web3.eth.getAccounts();
+
+  // select an account to deploy from. Rather arbitrarily chose first
+  const account = accounts[0];
+
+  // Parameter for contract constructor
+  const initialMessage = 'Hi there!';
+
+  // deploy the contract
+  inbox = await
+    // Parse ABI and load into local contract
+    new web3.eth.Contract(JSON.parse(interface))
+    // Tells web3 to deploy a new contract instance
+    .deploy({ data: bytecode, arguments: [initialMessage] })
+    // Tells web3 to send out transaction to perform deploy action
+    .send({ from: account, gas: '1000000' });
 });
 
 describe('Inbox', () => {
