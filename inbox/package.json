@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "ganache-cli": "6.0.3",
     "mocha": "4.1.0",
