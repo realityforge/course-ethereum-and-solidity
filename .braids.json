@@ -1,0 +1,7 @@
+{
+  "vendor/EthereumCasts": {
+    "url": "https://github.com/StephenGrider/EthereumCasts.git",
+    "branch": "master",
+    "revision": "c5c13eca55f9a08185c7d7c1482c3091cfc7f7bb"
+  }
+}
