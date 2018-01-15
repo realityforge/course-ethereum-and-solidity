@@ -36,6 +36,10 @@ beforeEach(async() => {
 
 describe('Inbox', () => {
   it('deploys a contract', () => {
+    // non-null address means the contract successfully
+    // deployed. Lots of other fields on inbox that contain
+    // other useful details.
+    assert.ok(inbox.options.address);
   });
 
   it('has a message equal to initial message after construction', () => {
