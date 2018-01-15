@@ -28,9 +28,9 @@ beforeEach(async() => {
   inbox = await
     // Parse ABI and load into local contract
     new web3.eth.Contract(JSON.parse(interface))
-    // Tells web3 to deploy a new contract instance
+    // Tells web3 to create a message that deploys a new contract instance
     .deploy({ data: bytecode, arguments: [initialMessage] })
-    // Tells web3 to send out transaction to perform deploy action
+    // Tells web3 to send out transaction containing the message  defined above
     .send({ from: account, gas: '1000000' });
 });
 
