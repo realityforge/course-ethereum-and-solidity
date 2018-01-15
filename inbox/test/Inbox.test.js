@@ -11,8 +11,16 @@ const web3 = new Web3(ganache.provider());
 // Destructure the compiled output of the smart contract
 const { interface, bytecode } = require('../compile');
 
-beforeEach(async() => {
+beforeEach(() => {
 });
 
 describe('Inbox', () => {
+  it('deploys a contract', () => {
+  });
+
+  it('has a message equal to initial message after construction', () => {
+  });
+
+  it('can change the message via setMessage', () => {
+  });
 });
