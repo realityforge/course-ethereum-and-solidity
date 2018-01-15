@@ -10,3 +10,9 @@ const web3 = new Web3(ganache.provider());
 
 // Destructure the compiled output of the smart contract
 const { interface, bytecode } = require('../compile');
+
+beforeEach(async() => {
+});
+
+describe('Inbox', () => {
+});
