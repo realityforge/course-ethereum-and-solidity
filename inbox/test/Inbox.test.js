@@ -64,7 +64,8 @@ describe('Inbox', () => {
       inbox.methods
            // Method on contract
            .setMessage('bye')
-           // transaction attributes
+           // transaction attributes. Note that this is send() rather than call to
+           // indicate different type of method
            .send({ from: accounts[0] });
     const message = await inbox.methods.message().call();
     assert.equal(message, 'bye');
