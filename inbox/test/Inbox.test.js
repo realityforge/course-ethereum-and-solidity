@@ -46,7 +46,17 @@ describe('Inbox', () => {
     assert.ok(inbox.options.address);
   });
 
-  it('has a message equal to initial message after construction', () => {
+  it('has a message equal to initial message after construction', async() => {
+    const message = await
+      // inbox is contract wrapper, methods are the list of methods defined by contract ABI
+      inbox.methods
+           // message() is the setup of the method call and includes any parameters that
+           // you want to pass to the contract
+           .message()
+           // call is the method that invokes the method on network. If it was a transaction
+           // would pass transaction parameters here.
+           .call();
+    assert.equal(message, 'Hi there!');
   });
 
   it('can change the message via setMessage', () => {
