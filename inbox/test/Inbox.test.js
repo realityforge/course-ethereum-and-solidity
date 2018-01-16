@@ -5,8 +5,10 @@ const ganache = require('ganache-cli');
 // We then use the constructor to create instance and connect it to specific networks
 const Web3 = require('web3');
 
+const provider = ganache.provider();
+
 // And here's that instance
-const web3 = new Web3(ganache.provider());
+const web3 = new Web3(provider);
 
 // Destructure the compiled output of the smart contract
 const { interface, bytecode } = require('../compile');
@@ -32,6 +34,8 @@ beforeEach(async() => {
     .deploy({ data: bytecode, arguments: [initialMessage] })
     // Tells web3 to send out transaction containing the message  defined above
     .send({ from: account, gas: '1000000' });
+
+  inbox.setProvider(provider);
 });
 
 describe('Inbox', () => {
