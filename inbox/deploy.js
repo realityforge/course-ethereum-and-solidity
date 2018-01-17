@@ -17,3 +17,25 @@ const provider = new HDWalletProvider(
 
 // Create web3 instance, ready to talk to network
 const web3 = new Web3(provider);
+
+// This function exists simply so we can  use async/await syntax
+const deploy = async() => {
+  const accounts = await web3.eth.getAccounts();
+
+  const selectedAccount = accounts[0];
+
+  console.log('Attempting to deploy from account', selectedAccount);
+
+  const initialMessage = 'Hi there!';
+
+  const result = await
+    new web3.eth.Contract(JSON.parse(interface))
+    .deploy({ data: bytecode, arguments: [initialMessage] })
+    // Send creates a transaction. Contrast with call
+    .send({ gas: '1000000', from: selectedAccount });
+
+  console.log('Contract deployed to', result.options.address);
+};
+deploy();
+
+// Note: This is very very similar to the tst javascript
