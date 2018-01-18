@@ -26,6 +26,15 @@ contract Lottery {
     entries.push(msg.sender);
   }
 
+  function pickWinner() public {
+    // Randomly select a "winner"
+    uint index = random() % entries.length;
+    address winner = entries[index];
+
+    // Reset the set of entrants in the lottery
+    entries = new address[](0);
+  }
+
   function random() private view returns (uint256) {
     // Create a psuedo random number by combining some values
     // that are difficult to predict but still not really random
