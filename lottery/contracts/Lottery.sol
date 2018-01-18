@@ -2,6 +2,7 @@ pragma solidity ^0.4.17;
 
 contract Lottery {
   address public manager;
+  address[] public entries;
 
   function Lottery() public {
     // msg is a global object that is available from any function
@@ -14,5 +15,14 @@ contract Lottery {
 
     // documentation url: http://solidity.readthedocs.io/en/develop/units-and-global-variables.html#block-and-transaction-properties
     manager = msg.sender;
+  }
+
+  function enter() public payable {
+    // Require is invariant check that will abort call if
+    // boolean condition returns false
+    require(msg.value > 0.1 ether);
+
+    // Record participant in lottery
+    entries.push(msg.sender);
   }
 }
