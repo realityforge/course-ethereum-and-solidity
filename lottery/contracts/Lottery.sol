@@ -25,4 +25,14 @@ contract Lottery {
     // Record participant in lottery
     entries.push(msg.sender);
   }
+
+  function random() private view returns (uint256) {
+    // Create a psuedo random number by combining some values
+    // that are difficult to predict but still not really random
+    // NOTE: IN real world this would not be acceptable as the miner
+    // could re-order transactions/change processing time to influence
+    // outcome
+    //keccak256 == sha3 but the sha3 function is deprecated
+    return uint(keccak256(block.difficulty, now, entries));
+  }
 }
