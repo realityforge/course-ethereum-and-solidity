@@ -26,6 +26,10 @@ contract Lottery {
     entries.push(msg.sender);
   }
 
+  function getEntries() public view returns (address[]) {
+    return entries;
+  }
+
   function pickWinner() public restrictedToManager {
     // Restrict the invocation of this to the manager
     // The next line not needed after function modifier added
