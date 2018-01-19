@@ -27,6 +27,8 @@ contract Lottery {
   }
 
   function pickWinner() public {
+    require(msg.sender == manager);
+
     // Randomly select a "winner"
     uint index = random() % entries.length;
     address winner = entries[index];
