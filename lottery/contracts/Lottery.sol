@@ -26,8 +26,10 @@ contract Lottery {
     entries.push(msg.sender);
   }
 
-  function pickWinner() public {
-    require(msg.sender == manager);
+  function pickWinner() public restrictedToManager {
+    // Restrict the invocation of this to the manager
+    // The next line not needed after function modifier added
+    //require(msg.sender == manager);
 
     // Randomly select a "winner"
     uint index = random() % entries.length;
@@ -51,5 +53,13 @@ contract Lottery {
     // outcome
     //keccak256 == sha3 but the sha3 function is deprecated
     return uint(keccak256(block.difficulty, block.timestamp, entries));
+  }
+
+  // Modifiers can be used to modify functions. See pickWinner()
+  modifier restrictedToManager() {
+    // Restrict the invocation of this to the manager
+    require(msg.sender == manager);
+    // This next line tells solitidity where to invoke original function
+    _;
   }
 }
