@@ -31,6 +31,11 @@ contract Lottery {
     uint index = random() % entries.length;
     address winner = entries[index];
 
+    // "transfer" is a function on address type
+    // this.balance gets the amount of money from current contract
+    // Thus this next line transfers all money from current contract to winner
+    winner.transfer(this.balance);
+
     // Reset the set of entrants in the lottery
     entries = new address[](0);
   }
