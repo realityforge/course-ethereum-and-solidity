@@ -127,5 +127,9 @@ describe('Lottery', () => {
 
     // Ensure the entrants were reset
     assert.equal(0, entries.length);
+
+    const balance = await web3.eth.getBalance(contract.options.address);
+
+    assert.equal(0, balance);
   });
 });
