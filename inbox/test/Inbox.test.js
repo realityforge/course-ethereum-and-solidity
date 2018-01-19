@@ -14,7 +14,7 @@ const web3 = new Web3(provider);
 const { interface, bytecode } = require('../compile');
 
 let accounts;
-let inbox;
+let contract;
 
 beforeEach(async() => {
   // Get a list of all accounts
@@ -27,7 +27,7 @@ beforeEach(async() => {
   const initialMessage = 'Hi there!';
 
   // deploy the contract
-  inbox = await
+  contract = await
     // Parse ABI and load into local contract
     new web3.eth.Contract(JSON.parse(interface))
     // Tells web3 to create a message that deploys a new contract instance
@@ -35,7 +35,7 @@ beforeEach(async() => {
     // Tells web3 to send out transaction containing the message  defined above
     .send({ from: account, gas: '1000000' });
 
-  inbox.setProvider(provider);
+  contract.setProvider(provider);
 });
 
 describe('Inbox', () => {
@@ -43,13 +43,13 @@ describe('Inbox', () => {
     // non-null address means the contract successfully
     // deployed. Lots of other fields on inbox that contain
     // other useful details.
-    assert.ok(inbox.options.address);
+    assert.ok(contract.options.address);
   });
 
   it('has a message equal to initial message after construction', async() => {
     const message = await
       // inbox is contract wrapper, methods are the list of methods defined by contract ABI
-      inbox.methods
+      contract.methods
            // message() is the setup of the method call and includes any parameters that
            // you want to pass to the contract
            .message()
@@ -61,13 +61,13 @@ describe('Inbox', () => {
 
   it('can change the message via setMessage', async() => {
     await
-      inbox.methods
+      contract.methods
            // Method on contract
            .setMessage('bye')
            // transaction attributes. Note that this is send() rather than call to
            // indicate different type of method
            .send({ from: accounts[0] });
-    const message = await inbox.methods.message().call();
+    const message = await contract.methods.message().call();
     assert.equal(message, 'bye');
   });
 });
