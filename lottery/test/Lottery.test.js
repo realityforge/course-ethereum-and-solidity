@@ -42,4 +42,38 @@ describe('Lottery', () => {
     // other useful details.
     assert.ok(contract.options.address);
   });
+  it('allows one account to enter', async() => {
+    const sourceAccount = accounts[1];
+
+    await
+      contract.methods
+              .enter()
+              .send({ from: sourceAccount, value: web3.utils.toWei('0.1', 'ether') });
+    const entries = await contract.methods.getEntries().call({ from: sourceAccount });
+
+    assert.equal(sourceAccount, entries[0]);
+    assert.equal(1, entries.length);
+  });
+
+  it('allows multiple accounts to enter', async() => {
+    await
+      contract.methods
+              .enter()
+              .send({ from: accounts[1], value: web3.utils.toWei('0.1', 'ether') });
+    await
+      contract.methods
+              .enter()
+              .send({ from: accounts[2], value: web3.utils.toWei('0.1', 'ether') });
+    await
+      contract.methods
+              .enter()
+              .send({ from: accounts[3], value: web3.utils.toWei('0.1', 'ether') });
+
+    const entries = await contract.methods.getEntries().call({ from: accounts[0] });
+
+    assert.equal(3, entries.length);
+    assert.equal(accounts[1], entries[0]);
+    assert.equal(accounts[2], entries[1]);
+    assert.equal(accounts[3], entries[2]);
+  });
 });
