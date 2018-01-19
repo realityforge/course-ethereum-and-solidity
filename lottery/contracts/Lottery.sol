@@ -37,6 +37,7 @@ contract Lottery {
     winner.transfer(this.balance);
 
     // Reset the set of entrants in the lottery
+    // i.e. create a new dynamic array of size 0
     entries = new address[](0);
   }
 
