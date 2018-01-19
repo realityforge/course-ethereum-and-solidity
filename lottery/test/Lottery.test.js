@@ -91,4 +91,17 @@ describe('Lottery', () => {
 
     assert(error !== null);
   });
+
+  it('requires manager to pick Winner', async() => {
+    // Account is not the manager
+    const account = accounts[3];
+    let error = null;
+    try {
+      await contract.methods.pickWinner().send({ from: account });
+    } catch (err) {
+      error = err;
+    }
+
+    assert(error !== null);
+  });
 });
