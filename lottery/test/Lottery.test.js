@@ -122,5 +122,10 @@ describe('Lottery', () => {
 
     // We spent some eth on gas so we can not guarantee 2 eth was transferred.
     assert(difference > web3.utils.toWei('1.8', 'ether'));
+
+    const entries = await contract.methods.getEntries().call({ from: accounts[0] });
+
+    // Ensure the entrants were reset
+    assert.equal(0, entries.length);
   });
 });
