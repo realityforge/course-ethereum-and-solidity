@@ -76,4 +76,19 @@ describe('Lottery', () => {
     assert.equal(accounts[2], entries[1]);
     assert.equal(accounts[3], entries[2]);
   });
+
+  it('requires a minimum amount of ether to enter', async() => {
+    let error = null;
+    try {
+      await contract.methods.enter().send({
+        from: accounts[0],
+        // Not enough eth should result in exception
+        value: web3.utils.toWei('0.01', 'ether')
+      });
+    } catch (err) {
+      error = err;
+    }
+
+    assert(error !== null);
+  });
 });
