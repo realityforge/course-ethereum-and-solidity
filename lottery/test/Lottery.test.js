@@ -120,6 +120,7 @@ describe('Lottery', () => {
     const finalBalance = await web3.eth.getBalance(participant);
     const difference = finalBalance - initialBalance;
 
+    // We spent some eth on gas so we can not guarantee 2 eth was transferred.
     assert(difference > web3.utils.toWei('1.8', 'ether'));
   });
 });
