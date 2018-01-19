@@ -20,7 +20,7 @@ contract Lottery {
   function enter() public payable {
     // Require is invariant check that will abort call if
     // boolean condition returns false
-    require(msg.value > 0.1 ether);
+    require(msg.value >= 0.1 ether);
 
     // Record participant in lottery
     entries.push(msg.sender);
