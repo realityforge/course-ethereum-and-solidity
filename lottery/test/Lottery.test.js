@@ -104,4 +104,22 @@ describe('Lottery', () => {
 
     assert(error !== null);
   });
+
+  it('sends money to the winner and resets the players array', async() => {
+    const manager = accounts[0];
+    const participant = accounts[3];
+
+    await contract.methods
+                  .enter()
+                  .send({ from: participant, value: web3.utils.toWei('2', 'ether') });
+
+    const initialBalance = await web3.eth.getBalance(participant);
+
+    await contract.methods.pickWinner().send({ from: manager });
+
+    const finalBalance = await web3.eth.getBalance(participant);
+    const difference = finalBalance - initialBalance;
+
+    assert(difference > web3.utils.toWei('1.8', 'ether'));
+  });
 });
