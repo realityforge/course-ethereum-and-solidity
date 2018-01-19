@@ -48,6 +48,6 @@ contract Lottery {
     // could re-order transactions/change processing time to influence
     // outcome
     //keccak256 == sha3 but the sha3 function is deprecated
-    return uint(keccak256(block.difficulty, now, entries));
+    return uint(keccak256(block.difficulty, block.timestamp, entries));
   }
 }
