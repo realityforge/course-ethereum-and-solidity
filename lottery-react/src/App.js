@@ -65,7 +65,7 @@ class App extends Component {
           <button>Enter</button>
         </form>
 
-        <hr />
+        <hr/>
 
         <h1>{this.state.message}</h1>
 
