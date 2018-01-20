@@ -3,10 +3,7 @@ import './App.css';
 import lottery from './lottery';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { manager: null };
-  }
+  state = { manager: '' };
 
   async componentDidMount() {
     const manager = await lottery.methods.manager().call();
