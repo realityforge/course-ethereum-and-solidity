@@ -4,7 +4,7 @@ import lottery from './lottery';
 import web3 from './web3';
 
 class App extends Component {
-  state = { manager: '', entries: [], balance: '', value: '' };
+  state = { manager: '', entries: [], balance: '', value: '', message: '' };
 
   async componentDidMount() {
     const manager = await lottery.methods.manager().call();
@@ -64,6 +64,11 @@ class App extends Component {
           </div>
           <button>Enter</button>
         </form>
+
+        <hr />
+
+        <h1>{this.state.message}</h1>
+
       </div>
     );
   }
