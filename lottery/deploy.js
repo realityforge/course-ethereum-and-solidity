@@ -33,6 +33,9 @@ const deploy = async() => {
     .send({ gas: '1000000', from: selectedAccount });
 
   console.log('Contract deployed to', result.options.address);
+
+  // Output interface so can be manually imported into react application
+  console.log(interface);
 };
 deploy();
 
