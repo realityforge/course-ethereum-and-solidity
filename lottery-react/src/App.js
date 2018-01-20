@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import logo from './logo.svg';
+import web3 from './web3';
 
 class App extends Component {
   render() {
