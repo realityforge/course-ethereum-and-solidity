@@ -11,6 +11,13 @@ class App extends Component {
     const entries = await lottery.methods.getEntries().call();
     const balance = await web3.eth.getBalance(lottery.options.address);
     this.setState({ manager, entries, balance });
+    this.timeout = setInterval(this.reloadState, 3000);
+  }
+
+  componentWillUnmount() {
+    if (this.timeout) {
+      clearInterval(this.timeout);
+    }
   }
 
   onEnter = async event => {
@@ -26,6 +33,12 @@ class App extends Component {
     });
 
     this.setState({ message: 'You have been entered!' });
+  };
+
+  reloadState = async() => {
+    const entries = await lottery.methods.getEntries().call();
+    const balance = await web3.eth.getBalance(lottery.options.address);
+    this.setState({ entries, balance });
   };
 
   render() {
