@@ -33,6 +33,20 @@ contract Campaign {
     approvers.push(msg.sender);
   }
 
+  function createRequest(string description, uint value, address recipient) public restrictedToManager {
+    Request memory newRequest = Request({
+      description : description,
+      value : value,
+      recipient : recipient,
+      complete : false
+      });
+
+    // Note this is equivalent to above - just a different syntax using positional args
+    //Request memory newRequest = Request(description, value, recipient, false);
+
+    requests.push(newRequest);
+  }
+
   // Modifiers can be used to modify functions
   modifier restrictedToManager() {
     // Restrict the invocation of this to the manager
