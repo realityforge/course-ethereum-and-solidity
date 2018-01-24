@@ -11,6 +11,10 @@ contract Campaign {
     address recipient;
     // has the request completed?
     bool complete;
+    // The number of yes votes
+    uint approvalCount;
+    // The addresses that have responded to request
+    mapping(address => bool) responders;
   }
 
   Request[] public requests;
@@ -39,13 +43,31 @@ contract Campaign {
       description : description,
       value : value,
       recipient : recipient,
-      complete : false
+      complete : false,
+      approvalCount : 0
       });
 
     // Note this is equivalent to above - just a different syntax using positional args
     //Request memory newRequest = Request(description, value, recipient, false);
 
     requests.push(newRequest);
+  }
+
+  function approveRequest(uint index) public {
+      // Must be an approver
+      require(approvers[msg.sender]);
+
+      // Get request that we care about
+      Request storage request = requests[index];
+
+      // Make sure approver has not already approved request
+      require(!request.responders[msg.sender]);
+
+      // Mark approver  as having voted
+      request.responders[msg.sender] = true;
+
+      // Increment count
+      request.approvalCount += 1;
   }
 
   // Modifiers can be used to modify functions
