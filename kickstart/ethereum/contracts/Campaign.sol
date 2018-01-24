@@ -24,6 +24,8 @@ contract Campaign {
   uint public minimumContribution;
   // Use a mapping for approvers so can use constant time access methods
   mapping(address => bool) public approvers;
+  // The number of approvers in Campaign
+  uint approversCount;
 
   function Campaign(uint minimum) public {
     // documentation url: http://solidity.readthedocs.io/en/develop/units-and-global-variables.html#block-and-transaction-properties
@@ -36,6 +38,9 @@ contract Campaign {
     require(msg.value > minimumContribution);
     // Add contributor to list of approvers
     approvers[msg.sender] = true;
+
+    // Manage number of approvers
+    approversCount ++;
   }
 
   function createRequest(string description, uint value, address recipient) public restrictedToManager {
@@ -54,20 +59,40 @@ contract Campaign {
   }
 
   function approveRequest(uint index) public {
-      // Must be an approver
-      require(approvers[msg.sender]);
+    // Must be an approver
+    require(approvers[msg.sender]);
 
-      // Get request that we care about
-      Request storage request = requests[index];
+    // Get request that we care about
+    Request storage request = requests[index];
 
-      // Make sure approver has not already approved request
-      require(!request.responders[msg.sender]);
+    // Make sure approver has not already approved request
+    require(!request.responders[msg.sender]);
 
-      // Mark approver  as having voted
-      request.responders[msg.sender] = true;
+    // Mark approver  as having voted
+    request.responders[msg.sender] = true;
 
-      // Increment count
-      request.approvalCount += 1;
+    // Increment count
+    request.approvalCount += 1;
+  }
+
+  function finalizeRequest(uint index) public restrictedToManager {
+    // Get request that we care about
+    Request storage request = requests[index];
+
+    // Make sure request not already complete
+    require(!request.complete);
+
+    // More than 50% of the approvers must agree to request
+    require(request.approvalCount > approversCount / 2);
+
+    // Mark request as complete
+    request.complete = true;
+
+    // transfer money to recipient
+  request.recipient.transfer(request.value)
+
+    // Notes: don't check that there is enough ETH to do
+    // this in approval process?
   }
 
   // Modifiers can be used to modify functions
