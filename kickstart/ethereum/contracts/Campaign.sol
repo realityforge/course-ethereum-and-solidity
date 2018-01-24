@@ -18,7 +18,8 @@ contract Campaign {
   address public manager;
   // Minimum amount to have a say in campaign
   uint public minimumContribution;
-  address[] public approvers;
+  // Use a mapping for approvers so can use constant time access methods
+  mapping(address => bool) public approvers;
 
   function Campaign(uint minimum) public {
     // documentation url: http://solidity.readthedocs.io/en/develop/units-and-global-variables.html#block-and-transaction-properties
@@ -30,7 +31,7 @@ contract Campaign {
     // to be an approver then need to send at least the minimumContribution
     require(msg.value > minimumContribution);
     // Add contributor to list of approvers
-    approvers.push(msg.sender);
+    approvers[msg.sender] = true;
   }
 
   function createRequest(string description, uint value, address recipient) public restrictedToManager {
