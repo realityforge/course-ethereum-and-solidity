@@ -1,5 +1,6 @@
 const path = require('path');
 const solc = require('solc');
+// Community managed fs substitute with extra functionality
 const fs = require('fs-extra');
 
 const buildPath = path.resolve(__dirname, 'build');
