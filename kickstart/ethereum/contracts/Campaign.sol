@@ -89,7 +89,7 @@ contract Campaign {
     request.complete = true;
 
     // transfer money to recipient
-  request.recipient.transfer(request.value)
+    request.recipient.transfer(request.value);
 
     // Notes: don't check that there is enough ETH to do
     // this in approval process?
