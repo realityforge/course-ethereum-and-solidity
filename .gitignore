@@ -3,6 +3,7 @@
 /*/npm-debug.log*
 /*/yarn-debug.log*
 /*/yarn-error.log*
+/kickstart/ethereum/build
 /Gemfile.lock
 *.iml
 /*.ipr
