@@ -1,5 +1,19 @@
 pragma solidity ^0.4.17;
 
+contract CampaignFactory {
+  address[] private campaigns;
+
+  function CampaignFactory(uint minimum) public {
+    // Create a new campaign and add to list of campaigns managing
+    address campaign = new Campaign(msg.sender, minimum);
+    campaigns.push(campaign);
+  }
+
+  function getCampaigns() public view returns (address[]) {
+    return campaigns;
+  }
+}
+
 contract Campaign {
   // A request for some amount of spending on Campaign
   struct Request {
@@ -27,9 +41,8 @@ contract Campaign {
   // The number of approvers in Campaign
   uint approversCount;
 
-  function Campaign(uint minimum) public {
-    // documentation url: http://solidity.readthedocs.io/en/develop/units-and-global-variables.html#block-and-transaction-properties
-    manager = msg.sender;
+  function Campaign(address mgr, uint minimum) public {
+    manager = mgr;
     minimumContribution = minimum;
   }
 
