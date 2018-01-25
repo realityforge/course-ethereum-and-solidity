@@ -18,6 +18,7 @@ let accounts;
 let factory;
 let campaign;
 let campaignAddress;
+let campaignManager;
 
 beforeEach(async() => {
   // Get a list of all accounts
@@ -37,8 +38,10 @@ beforeEach(async() => {
 
   factory.setProvider(provider);
 
+  campaignManager = accounts[1];
+
   // Actually call the create campaign method
-  await factory.methods.createCampaign('100').send({ from: accounts[0], gas: '1000000' });
+  await factory.methods.createCampaign('100').send({ from: campaignManager, gas: '1000000' });
 
   // Retrieve the address of campaign object just created
   [campaignAddress] = await factory.methods.getCampaigns().call();
