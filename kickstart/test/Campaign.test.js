@@ -57,6 +57,25 @@ describe('CampaignFactory', () => {
     // other useful details.
     assert.ok(factory.options.address);
   });
+
+  it('returns campaigns created', async() => {
+    const sourceAccount = accounts[1];
+
+    const campaigns = await factory.methods.getCampaigns().call({ from: sourceAccount });
+    assert.equal(1, campaigns.length);
+    assert.equal(campaignAddress, campaigns[0]);
+
+    // Create a new campaign so that we can see leng increment
+    await factory.methods
+                 .createCampaign('1000')
+                 .send({ from: sourceAccount, gas: '1000000' });
+
+    const campaigns2 = await factory.methods.getCampaigns().call();
+
+    assert.equal(2, campaigns2.length);
+    assert.equal(campaignAddress, campaigns[0]);
+  });
+
 });
 
 describe('Campaign', () => {
