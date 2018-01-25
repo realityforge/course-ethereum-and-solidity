@@ -66,4 +66,9 @@ describe('Campaign', () => {
     // other useful details.
     assert.ok(campaign.options.address);
   });
+
+  it('has the correct campaign manager', async () => {
+    const manager = await campaign.methods.manager().call();
+    assert.equal(campaignManager, manager);
+  });
 });
