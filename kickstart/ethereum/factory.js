@@ -1,4 +1,4 @@
-import web3 from 'web3';
+import web3 from './web3';
 import CampaignFactory from './build/CampaignFactory.json';
 
 // On rinkeby network, this was the address that we deployed to.
