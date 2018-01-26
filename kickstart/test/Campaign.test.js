@@ -125,4 +125,19 @@ describe('Campaign', () => {
     const balance = await web3.eth.getBalance(campaign.options.address);
     assert.equal(0, balance);
   });
+
+  it('allows a manager to make a payment request', async() => {
+    const recipientAddress = accounts[3];
+    await campaign.methods
+                  .createRequest('Activity 1', '1000', recipientAddress)
+                  .send({ from: campaignManager, gas: '1000000' });
+
+    const request = await campaign.methods.requests(0).call();
+
+    assert.equal('Activity 1', request.description);
+    assert.equal('1000', request.value);
+    assert.equal(recipientAddress, request.recipient);
+    assert.equal(false, request.complete);
+    assert.equal(0, request.approvalCount);
+  });
 });
