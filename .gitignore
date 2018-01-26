@@ -4,6 +4,7 @@
 /*/yarn-debug.log*
 /*/yarn-error.log*
 /kickstart/ethereum/build
+/kickstart/.next
 /Gemfile.lock
 *.iml
 /*.ipr
