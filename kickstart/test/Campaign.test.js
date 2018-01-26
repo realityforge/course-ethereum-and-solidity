@@ -90,4 +90,39 @@ describe('Campaign', () => {
     const manager = await campaign.methods.manager().call();
     assert.equal(campaignManager, manager);
   });
+
+  it('allows contributors to contribute and adds them as an approver', async() => {
+    const account = accounts[3];
+
+    const initialBalance = await web3.eth.getBalance(campaign.options.address);
+    assert.equal(0, initialBalance);
+
+    await campaign.methods.contribute().send({ from: account, value: 200 });
+
+    // Make sure contributor was registered
+    const isContributor = await campaign.methods.approvers(account).call();
+    assert(isContributor);
+
+    // Make sure the value is added to balance on the campaign account
+    const balance = await web3.eth.getBalance(campaign.options.address);
+
+    assert.ok(balance > 0);
+    assert.equal(200, balance);
+  });
+
+  it('raises error if minimum contribution is too low', async() => {
+    const account = accounts[3];
+
+    const initialBalance = await web3.eth.getBalance(campaign.options.address);
+    assert.equal(0, initialBalance);
+
+    let error = null;
+    try { await campaign.methods.contribute().send({ from: account, value: 99 });} catch (e) { error = e; }
+    assert(error !== null);
+    const isContributor = await campaign.methods.approvers(account).call();
+    assert(!isContributor);
+
+    const balance = await web3.eth.getBalance(campaign.options.address);
+    assert.equal(0, balance);
+  });
 });
