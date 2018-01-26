@@ -165,6 +165,7 @@ describe('Campaign', () => {
     balance = web3.utils.fromWei(balance, 'ether');
     balance = parseFloat(balance);
 
+    // This is a rough estimate as accounts are not reset between tests so this value is approximate.
     assert(balance > 104);
   });
 });
