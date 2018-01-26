@@ -140,4 +140,31 @@ describe('Campaign', () => {
     assert.equal(false, request.complete);
     assert.equal(0, request.approvalCount);
   });
+
+  it('processes requests', async() => {
+
+    const contributor = accounts[2];
+    const requestRecipient = accounts[3];
+
+    // Make contributor actually contribute
+    await campaign.methods.contribute().send({ from: contributor, value: web3.utils.toWei('10', 'ether') });
+
+    // Let the campaign manager create a request
+    await campaign.methods
+                  .createRequest('A', web3.utils.toWei('5', 'ether'), requestRecipient)
+                  .send({ from: campaignManager, gas: '1000000' });
+
+    // Let contributor vote on request
+    await campaign.methods.approveRequest(0).send({ from: contributor, gas: '1000000' });
+
+    // The campaign manager now can finalize request
+    await campaign.methods.finalizeRequest(0).send({ from: campaignManager, gas: '1000000' });
+
+    // Make sure that the recipient gets the funds from request
+    let balance = await web3.eth.getBalance(requestRecipient);
+    balance = web3.utils.fromWei(balance, 'ether');
+    balance = parseFloat(balance);
+
+    assert(balance > 104);
+  });
 });
