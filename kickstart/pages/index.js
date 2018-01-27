@@ -15,9 +15,9 @@ class CampaignIndex extends React.Component {
         <h3>Open Campaigns</h3>
 
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>
+        {/* button floated to right and first so end up with two-column style layout */}
+        <Button content="Create Campaign" icon="add circle" primary floated="right"/>
         {this.renderCampaigns()}
-
-        <Button content="Create Campaign" icon="add circle" primary/>
       </Layout>
     );
   }
