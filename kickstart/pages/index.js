@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Card} from 'semantic-ui-react';
 import factory from '../ethereum/factory';
 
 class CampaignIndex extends React.Component {
@@ -9,8 +10,24 @@ class CampaignIndex extends React.Component {
 
   render() {
     return (
-      <h1>campaign count - {this.props.campaigns.length}</h1>
+      <div>
+        {this.renderCampaigns()}
+      </div>
     );
+  }
+
+  renderCampaigns() {
+    // Create a set of objects where each object represents a single card
+    // Basically copied out semantic-ui docs
+    const items = this.props.campaigns.map(address => {
+      return {
+        header: address,
+        description: <a>View Campaign</a>,
+        fluid: true
+      };
+    });
+
+    return <Card.Group items={items}/>;
   }
 }
 
