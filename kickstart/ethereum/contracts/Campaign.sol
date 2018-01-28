@@ -31,6 +31,20 @@ contract Campaign {
     mapping(address => bool) responders;
   }
 
+  // A response for getSummary() method that summarizes contract
+  struct Summary {
+    // the amount of wei in account
+    uint balance;
+    // the number of requests
+    uint requestCount;
+    // Minimum amount to have a say in campaign
+    uint minimumContribution;
+    // The number of approvers in Campaign
+    uint contributors;
+    // Who set up campaign
+    address manager;
+  }
+
   Request[] public requests;
   // Who set up campaign
   address public manager;
@@ -44,6 +58,20 @@ contract Campaign {
   function Campaign(address mgr, uint minimum) public {
     manager = mgr;
     minimumContribution = minimum;
+  }
+
+  function getSummary() public view returns (Summary) {
+
+    // Explicitly convert contract into address
+    address contractAddress = this;
+    Summary memory summary = Summary({
+      balance : contractAddress.balance,
+      contributors : approversCount,
+      minimumContribution : minimumContribution,
+      requestCount : requests.length,
+      manager: manager
+      });
+      return summary;
   }
 
   function contribute() public payable {
