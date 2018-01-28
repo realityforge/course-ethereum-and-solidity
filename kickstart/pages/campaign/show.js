@@ -5,7 +5,7 @@ class CampaignShow extends React.Component {
   render() {
     return (
       <Layout>
-        <h3>Campaign</h3>
+        <h3>Campaign Details</h3>
       </Layout>
     );
   }
