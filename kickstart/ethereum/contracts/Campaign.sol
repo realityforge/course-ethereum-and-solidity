@@ -31,20 +31,6 @@ contract Campaign {
     mapping(address => bool) responders;
   }
 
-  // A response for getSummary() method that summarizes contract
-  struct Summary {
-    // the amount of wei in account
-    uint balance;
-    // the number of requests
-    uint requestCount;
-    // Minimum amount to have a say in campaign
-    uint minimumContribution;
-    // The number of approvers in Campaign
-    uint contributors;
-    // Who set up campaign
-    address manager;
-  }
-
   Request[] public requests;
   // Who set up campaign
   address public manager;
@@ -60,18 +46,21 @@ contract Campaign {
     minimumContribution = minimum;
   }
 
-  function getSummary() public view returns (Summary) {
-
-    // Explicitly convert contract into address
+  // previous we returned a struct but web3.js does not seem to support this...
+  function getSummary() public view returns (uint, uint, uint, uint, address) {
     address contractAddress = this;
-    Summary memory summary = Summary({
-      balance : contractAddress.balance,
-      contributors : approversCount,
-      minimumContribution : minimumContribution,
-      requestCount : requests.length,
-      manager: manager
-      });
-      return summary;
+    return (
+    // Minimum amount to have a say in campaign
+    minimumContribution,
+    // the amount of wei in account
+    contractAddress.balance,
+    // the number of requests
+    requests.length,
+    // The number of contributors in Campaign
+    approversCount,
+    // Who set up campaign
+    manager
+    );
   }
 
   function getRequestCount() public view returns (uint) {
