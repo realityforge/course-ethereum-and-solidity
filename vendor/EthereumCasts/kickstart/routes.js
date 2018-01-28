@@ -1,4 +1,5 @@
-const routes = require('next-routes')();
+const NextRoutes = require('next-routes');
+const routes = NextRoutes();
 
 routes
   .add('/campaigns/new', '/campaigns/new')
