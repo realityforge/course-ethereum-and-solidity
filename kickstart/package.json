@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "test": "mocha",
-    "dev": "next dev"
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "fs-extra": "5.0.0",
