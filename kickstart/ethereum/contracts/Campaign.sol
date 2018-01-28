@@ -74,6 +74,10 @@ contract Campaign {
       return summary;
   }
 
+  function getRequestCount() public view returns (uint) {
+    return requests.length;
+  }
+
   function contribute() public payable {
     // to be an approver then need to send at least the minimumContribution
     require(msg.value > minimumContribution);
