@@ -39,7 +39,7 @@ contract Campaign {
   // Use a mapping for approvers so can use constant time access methods
   mapping(address => bool) public approvers;
   // The number of approvers in Campaign
-  uint approversCount;
+  uint public approversCount;
 
   function Campaign(address mgr, uint minimum) public {
     manager = mgr;
