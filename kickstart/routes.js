@@ -1,6 +1,7 @@
 const routes = require('next-routes')();
 
 routes
-.add('/campaigns/new', '/campaigns/new');
+.add('/campaign/new', '/campaign/new')
+.add('/campaign/:address', '/campaign/show');
 
 module.exports = routes;
