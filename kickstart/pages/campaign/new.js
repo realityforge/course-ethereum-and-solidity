@@ -3,6 +3,7 @@ import {Button, Form, Input, Message} from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
+import {Router} from '../../routes';
 
 class CampaignNew extends React.Component {
   state = {
@@ -22,6 +23,9 @@ class CampaignNew extends React.Component {
 
       // Create the campaign in eth network
       await factory.methods.createCampaign(this.state.minimumContribution).send({ from: accounts[0] });
+
+      // Change back to routes list page
+      Router.pushRoute('/');
 
     } catch (err) {
 
