@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Button, Form, Input, Message} from 'semantic-ui-react';
 import Layout from '../../components/Layout';
+import factory from '../../ethereum/factory';
+import web3 from '../../ethereum/web3';
 
 class CampaignNew extends React.Component {
   state = {
@@ -9,12 +11,34 @@ class CampaignNew extends React.Component {
     loading: false
   };
 
+  onSubmit = async event => {
+    event.preventDefault();
+
+    // Update the UI to reflect that loading is occuring
+    this.setState({ loading: true, errorMessage: '' });
+
+    try {
+      const accounts = await web3.eth.getAccounts();
+
+      // Create the campaign in eth network
+      await factory.methods.createCampaign(this.state.minimumContribution).send({ from: accounts[0] });
+
+    } catch (err) {
+
+      // Some error occurred so report it
+      this.setState({ errorMessage: err.message });
+    }
+
+    // Interacting with the network is complete
+    this.setState({ loading: false });
+  };
+
   render() {
     return (
       <Layout>
         <h3>Create a Campaign</h3>
 
-        <Form error={!!this.state.errorMessage}>
+        <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
             <label>Minimum Contribution</label>
             <Input
