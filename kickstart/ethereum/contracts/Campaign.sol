@@ -32,7 +32,7 @@ contract Campaign {
   }
 
   Request[] public requests;
-  // Who set up campign
+  // Who set up campaign
   address public manager;
   // Minimum amount to have a say in campaign
   uint public minimumContribution;
