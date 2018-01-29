@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Card, Grid} from 'semantic-ui-react';
+import {Button, Card, Grid} from 'semantic-ui-react';
 import web3 from 'web3';
 import ContributeForm from '../../components/ContributeForm';
 import Layout from '../../components/Layout';
 import createCampaignContract from '../../ethereum/campaign';
+import {Link} from '../../routes';
 
 class CampaignShow extends React.Component {
   //The props object passed in is separate from the one passed into the component
@@ -78,6 +79,15 @@ class CampaignShow extends React.Component {
 
             <Grid.Column width={6}>
               <ContributeForm address={this.props.address}/>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Link route={`/campaign/${this.props.address}/requests`}>
+                <a>
+                  <Button primary>View Requests</Button>
+                </a>
+              </Link>
             </Grid.Column>
           </Grid.Row>
         </Grid>
