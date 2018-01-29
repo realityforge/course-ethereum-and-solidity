@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
+import {Card} from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import createCampaignContract from '../../ethereum/campaign';
 
 class CampaignShow extends React.Component {
   //The props object passed in is separate from the one passed into the component
-  // The props contains props from next - in particular the parameters for route/query. See https://github.com/zeit/next.js/#fetching-data-and-component-lifecycle
-  // It is also limited to the top-level "pages" components only.
+  // The props contains props from next - in particular the parameters for route/query. See
+  // https://github.com/zeit/next.js/#fetching-data-and-component-lifecycle It is also limited to the top-level "pages"
+  // components only.
   static async getInitialProps(props) {
     const campaign = createCampaignContract(props.query.address);
 
@@ -23,10 +25,32 @@ class CampaignShow extends React.Component {
     };
   }
 
+  renderMetrics() {
+    const {
+      address,
+      minimumContribution,
+      balance,
+      requestsCount,
+      approversCount,
+      manager
+    } = this.props;
+    const items = [
+      {
+        header: manager,
+        meta: 'Address of Manager',
+        description: 'The manager created this campaign and can create requests',
+        style: { overflowWrap: 'break-word'}
+      }
+    ];
+
+    return <Card.Group items={items}/>;
+  }
+
   render() {
     return (
       <Layout>
         <h3>Campaign Details</h3>
+        {this.renderMetrics()}
       </Layout>
     );
   }
