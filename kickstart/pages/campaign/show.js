@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Card} from 'semantic-ui-react';
 import web3 from 'web3';
+import ContributeForm from '../../components/ContributeForm';
 import Layout from '../../components/Layout';
 import createCampaignContract from '../../ethereum/campaign';
 
@@ -72,6 +73,7 @@ class CampaignShow extends React.Component {
       <Layout>
         <h3>Campaign Details</h3>
         {this.renderMetrics()}
+        <ContributeForm address={this.props.address}/>
       </Layout>
     );
   }
