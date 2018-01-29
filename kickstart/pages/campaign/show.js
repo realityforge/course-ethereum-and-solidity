@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card} from 'semantic-ui-react';
+import {Card, Grid} from 'semantic-ui-react';
 import web3 from 'web3';
 import ContributeForm from '../../components/ContributeForm';
 import Layout from '../../components/Layout';
@@ -72,8 +72,15 @@ class CampaignShow extends React.Component {
     return (
       <Layout>
         <h3>Campaign Details</h3>
-        {this.renderMetrics()}
-        <ContributeForm address={this.props.address}/>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={10}>{this.renderMetrics()}</Grid.Column>
+
+            <Grid.Column width={6}>
+              <ContributeForm address={this.props.address}/>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Layout>
     );
   }
