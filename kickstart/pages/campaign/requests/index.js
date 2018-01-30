@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Button} from 'semantic-ui-react';
+import {Button, Table} from 'semantic-ui-react';
 import Layout from '../../../components/Layout';
+import RequestRow from '../../../components/RequestRow';
 import createCampaignContract from '../../../ethereum/campaign';
 import {Link} from '../../../routes';
 
@@ -27,8 +28,15 @@ export default class RequestsIndex extends Component {
     return { address, requests, requestCount, approversCount };
   }
 
+  renderRows() {
+    return this.props.requests.map((r, index) => {
+     return <RequestRow key={`request-${index}`} id={index} request={r} address={this.props.address} approversCount={this.props.approversCount}/>;
+    });
+  };
+
   render() {
-    console.log('this.props.address', this.props.address);
+    const { Header, Row, HeaderCell, Body } = Table;
+
     return (
       <Layout>
         <h3>Requests</h3>
@@ -37,6 +45,21 @@ export default class RequestsIndex extends Component {
             <Button primary floated="right" style={{ marginBottom: 10 }}>Add Request</Button>
           </a>
         </Link>
+        <Table>
+          <Header>
+            <Row>
+              <HeaderCell>ID</HeaderCell>
+              <HeaderCell>Description</HeaderCell>
+              <HeaderCell>Amount</HeaderCell>
+              <HeaderCell>Recipient</HeaderCell>
+              <HeaderCell>Approval Count</HeaderCell>
+              <HeaderCell>Approve</HeaderCell>
+              <HeaderCell>Finalize</HeaderCell>
+            </Row>
+          </Header>
+          <Body>{this.renderRows()}</Body>
+        </Table>
+        <div>Found {this.props.requestCount} requests.</div>
       </Layout>
     );
   }
